@@ -19,6 +19,21 @@ Makie.heatmap!(ax, data[1].PixelData; colormap = :magma)
 ```
 
 ```julia
+fig = Figure(; size = (1200, 800));
+
+ax1 = CairoMakie.Axis(fig[1, 1])
+ax2 = CairoMakie.Axis(fig[1, 2])
+ds_img = []
+img = (data[1])[(0x7FE0, 0x0010)]
+for i in 1:size(img)[1]
+    push!(ds_img, img[i, 1:2:end])
+end
+
+Makie.heatmap!(ax1, img; colormap = :magma)
+Makie.heatmap!(ax2, reduce(hcat, ds_img)'; colormap = :magma)
+```
+
+```julia
 pixel_array = []
 for i in range(1, size(data, 1))
     try
