@@ -1,0 +1,3 @@
+[submodule "dataset-uta4-dicom"]
+	path = dataset-uta4-dicom
+	url = https://github.com/MIMBCD-UI/dataset-uta4-dicom

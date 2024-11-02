@@ -1,0 +1,37 @@
+```julia
+using CairoMakie
+using DICOM
+using FileIO
+using Images
+using ImageMagick
+```
+
+
+```julia
+data = dcmdir_parse("dataset-uta4-dicom/dataset/mm/p1_d045f565-e0be-432c-aaab-8296b169c529")
+```
+
+```julia
+fig = Figure(; size = (1200, 800));
+
+ax = CairoMakie.Axis(fig[1, 1])
+Makie.heatmap!(ax, data[1].PixelData; colormap = :magma)
+```
+
+```julia
+pixel_array = []
+for i in range(1, size(data, 1))
+    try
+        push!(pixel_array, (data[i])[(0x7FE0, 0x0010)][:, 2])
+    catch e
+        println(i)
+    end
+end
+```
+
+```julia
+for i in range(1, size(pixel_array, 1))
+    filenamesave = string(i) *".png"
+    save(filenamesave, pixel_array[i])
+end
+```
